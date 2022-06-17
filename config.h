@@ -62,6 +62,7 @@ static const char unknown_str[] = "n/a";
  *                                                     NULL on OpenBSD
  * wifi_perc           WiFi signal in percent          interface name (wlan0)
  * wifi_essid          WiFi ESSID                      interface name (wlan0)
+ * pomo                Pomodoro Timer                  NULL
  */
 static const struct arg args[] = {
 	/* function format          argument */
