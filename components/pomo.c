@@ -14,6 +14,7 @@ static int pomo_seconds = POMO_WORK_SECONDS;
 static int previous_time = POMO_WORK_SECONDS;
 static int pomo_sessions = 0;
 static int pomo_state = 0;
+static int should_blink = 0;
 
 //0 = paused
 //1 = ticking
@@ -62,10 +63,16 @@ const char *transition() {
 
 const char *reduceTime(void) {
   pomo_seconds = pomo_seconds - 1;
+  if (pomo_seconds <= 0 && should_blink){
+	  should_blink = 0; 
+	  return " ";
+  }
+  else should_blink = 1;
+
   return pomo_seconds <= 0
-             ? bprintf("%d%s-%.2d:%.2d", pomo_sessions, getSymbol(),(pomo_seconds / 60) * -1,
-                       (pomo_seconds % 60) * -1)
-             : bprintf("%d%s%.2d:%.2d", pomo_sessions, getSymbol(),pomo_seconds / 60, pomo_seconds % 60);
+     	  ? bprintf("%d%s-%.2d:%.2d", pomo_sessions, getSymbol(),(pomo_seconds / 60) * -1,
+               (pomo_seconds % 60) * -1)
+     	  : bprintf("%d%s%.2d:%.2d", pomo_sessions, getSymbol(),pomo_seconds / 60, pomo_seconds % 60);
 }
 
 void signalChange() {
